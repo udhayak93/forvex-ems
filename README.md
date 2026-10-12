@@ -97,8 +97,8 @@ git add .
 # 3. Create initial commit
 git commit -m "feat: complete Forvex EMS full version with charts, responsive UI and deployment configs"
 
-# 4. Link your GitHub remote (replace with your GitHub username & repo URL)
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/forvex-ems.git
+# 4. Link your GitHub remote
+git remote add origin https://github.com/udhayak93/forvex-ems.git
 
 # 5. Push to GitHub main branch
 git push -u origin main
