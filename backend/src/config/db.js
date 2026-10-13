@@ -7,7 +7,7 @@ const connectDB = async () => {
 
   const options = {
     dbName: 'nexus_ems', // Always enforces nexus_ems database isolation
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 10000,
   };
 
   try {
