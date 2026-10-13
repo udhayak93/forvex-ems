@@ -443,11 +443,25 @@ export const EmployeeList = () => {
 
 // Form modal for Add / Edit
 const EmployeeFormModal = ({ initialData, departments, designations, isNew, onClose, onSave }) => {
-  const [formData, setFormData] = useState({ ...initialData });
+  const [formData, setFormData] = useState({
+    ...initialData,
+    department: typeof initialData?.department === 'object' ? initialData.department?._id : (initialData?.department || ''),
+    designation: typeof initialData?.designation === 'object' ? initialData.designation?._id : (initialData?.designation || ''),
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    if (!formData.firstName?.trim() || !formData.lastName?.trim() || !formData.email?.trim()) {
+      alert('Please fill in First Name, Last Name, and Email Address.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      await onSave(formData);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -657,11 +671,11 @@ const EmployeeFormModal = ({ initialData, departments, designations, isNew, onCl
             </div>
 
             <div className="modal-footer py-2 px-4">
-              <button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={onClose} disabled={isSubmitting}>
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary-nexus btn-sm">
-                Save Employee
+              <button type="submit" className="btn btn-primary-nexus btn-sm" disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : 'Save Employee'}
               </button>
             </div>
           </form>
